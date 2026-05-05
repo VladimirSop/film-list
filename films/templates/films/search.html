@@ -1,17 +1,21 @@
+{% extends "films/base.html" %}
+
+{% block content %}
+
 <h1>Результаты поиска</h1>
 
-<a href="/">Назад</a>
+<a href="javascript:history.back()">← Назад</a>
 
 {% for movie in movies %}
-    <div>
-        <b>
-            {{ movie.title }}
-        </b>
+    <div class="card">
+        <b>{{ movie.title }}</b>
 
-        <form action="/add/" method="post">
+        <form action="/room/{{ code }}/add/" method="post">
             {% csrf_token %}
             <input type="hidden" name="title" value="{{ movie.title }}">
             <button>Добавить</button>
         </form>
     </div>
 {% endfor %}
+
+{% endblock %}

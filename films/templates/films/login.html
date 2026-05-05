@@ -1,0 +1,14 @@
+{% extends "films/base.html" %}
+
+{% block content %}
+
+<h1>Вход</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <input name="username" placeholder="Логин">
+    <input name="password" type="password" placeholder="Пароль">
+    <button>Войти</button>
+</form>
+
+{% endblock %}

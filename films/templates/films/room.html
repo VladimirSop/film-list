@@ -1,0 +1,52 @@
+{% extends "films/base.html" %}
+
+{% block content %}
+
+<h1>{{ room.name }}</h1>
+<p>Код комнаты: <b>{{ room.code }}</b></p>
+
+<!-- КНОПКИ НАВИГАЦИИ -->
+<a href="/">← Назад</a>
+
+<form action="/room/{{ room.code }}/search/" method="get">
+    <input name="q" placeholder="Поиск...">
+    <button>Найти</button>
+</form>
+
+<h2 class="section-title">Не просмотрено</h2>
+
+{% for movie in movies %}
+    {% if not movie.watched %}
+        <div class="card">
+            <b>{{ movie.title }}</b>
+
+            <form action="/room/{{ room.code }}/toggle/{{ movie.id }}/" method="post">
+                {% csrf_token %}
+                <button>✔ Просмотрено</button>
+            </form>
+
+            <form action="/room/{{ room.code }}/desc/{{ movie.id }}/" method="post">
+                {% csrf_token %}
+                <input name="description" placeholder="Описание">
+                <button>Сохранить</button>
+            </form>
+
+            <p>{{ movie.description }}</p>
+        </div>
+    {% endif %}
+{% endfor %}
+
+<details>
+<summary class="section-title">Просмотренные</summary>
+
+{% for movie in movies %}
+    {% if movie.watched %}
+        <div class="card">
+            {{ movie.title }}
+        </div>
+    {% endif %}
+{% endfor %}
+
+</details>
+
+{% endblock %}
