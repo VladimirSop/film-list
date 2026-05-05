@@ -1,0 +1,17 @@
+<h1>Результаты поиска</h1>
+
+<a href="/">Назад</a>
+
+{% for movie in movies %}
+    <div>
+        <b>
+            {{ movie.title }}
+        </b>
+
+        <form action="/add/" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="title" value="{{ movie.title }}">
+            <button>Добавить</button>
+        </form>
+    </div>
+{% endfor %}

@@ -1,0 +1,51 @@
+<h1>Мой список</h1>
+
+<form action="/search/" method="get">
+    <input type="text" name="q" placeholder="Поиск...">
+    <button type="submit">Найти</button>
+</form>
+
+<h2>📌 Не просмотрено</h2>
+
+{% for movie in movies %}
+    {% if not movie.watched %}
+        <div>
+            <b>{{ movie.title }}</b>
+
+            <form action="/toggle/{{ movie.id }}/" method="post">
+                {% csrf_token %}
+                <button>Просмотрено</button>
+            </form>
+
+            <form action="/desc/{{ movie.id }}/" method="post">
+                {% csrf_token %}
+                <input type="text" name="description" placeholder="Описание">
+                <button>Сохранить</button>
+            </form>
+
+            <p>{{ movie.description }}</p>
+        </div>
+    {% endif %}
+{% endfor %}
+
+<hr>
+
+<details>
+<summary>✅ Просмотренные</summary>
+
+{% for movie in movies %}
+    {% if movie.watched %}
+        <div>
+            <b>{{ movie.title }}</b>
+
+            <form action="/toggle/{{ movie.id }}/" method="post">
+                {% csrf_token %}
+                <button>Вернуть</button>
+            </form>
+
+            <p>{{ movie.description }}</p>
+        </div>
+    {% endif %}
+{% endfor %}
+
+</details>
